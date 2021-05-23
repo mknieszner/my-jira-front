@@ -1,0 +1,31 @@
+td {
+  min-width: 100px;
+  max-width: 100px;
+  width: 100px;
+  text-align: center;
+  border: 1px solid #32383e;
+  background-color: rgba(200, 200, 200, 0.05);
+  color: lightgray !important;
+}
+
+td.description {
+  min-width: 200px;
+  max-width: 200px;
+  width: 200px;
+  text-align: justify;
+  background-color: rgba(200, 200, 200, 0.05);
+  border: 1px solid #32383e;
+  color: lightgray !important;
+}
+
+@media (min-width: 768px) {
+  td {
+    min-width: 200px;
+    width: 200px;
+  }
+
+  td.description {
+    min-width: 400px;
+    width: 400px;
+  }
+}

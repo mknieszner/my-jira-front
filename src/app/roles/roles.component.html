@@ -1,0 +1,18 @@
+<div class="jumbotron">
+  <div class="row" style="padding: 30px">
+    <div class="col-12 col-md-4 align-self-start">
+      <ul class="list-group">
+        <li class="list-group-item active border-dark" style="background-color: rgba(0,0,0,0.05) !important;">Roles:</li>
+        <li class="list-group-item list-group-item-action d-flex justify-content-end"
+            *ngFor="let role of (roles | async)" (click)="onSelectRole(role)"
+            [ngClass]="selectedRole?.id == role.id ? 'bg-light' : ''">
+          <td class="mr-auto p-2">{{ role.name }}</td>
+        </li>
+        <button class="btn text-white" style="background-color: rgba(0,0,0,0.05) !important;" (click)="onNewRole()">New role</button>
+      </ul>
+    </div>
+    <div class="col-12 col-md-8 align-self-center">
+      <app-role-details [role]="selectedRole"></app-role-details>
+    </div>
+  </div>
+</div>

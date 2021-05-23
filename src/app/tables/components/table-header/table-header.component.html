@@ -1,0 +1,111 @@
+<p>{{tableDefinition | json}}</p>
+<div class="d-flex justify-content-center">
+  <tr *ngIf="tableDefinition && !extendedFilterMode">
+    <td *ngFor="let column of tableDefinition?.columnDetailDefinitionDtoList; let i = index"
+        [ngClass]="column.type== 'DE' ? 'description' : '' "
+        style="border-top: 1px solid #083E46">
+      <div class="d-flex justify-content-between">
+        <span class="text-info">{{column.name }}</span>
+        <button class="btn btn-sm btn-outline-info"
+                (click)="sort({name:'column', index: i, dataType: column.type, asc: !sortContent.asc})">
+          <i class="text-info fas fa-arrows-alt-v"></i>
+        </button>
+      </div>
+    </td>
+    <div *ngIf="extendedTableView">
+      <td>
+        <div class="d-flex justify-content-between">
+          <span class="text-info">ID</span>
+          <button class="btn btn-sm btn-outline-info"
+                  (click)="sort({name:'id', index: 0, dataType: 'IN', asc: !sortContent.asc })">
+            <i class="text-info fas fa-arrows-alt-v"></i>
+          </button>
+        </div>
+      </td>
+      <td hidden>
+        <div class="d-flex justify-content-between"></div>
+        <span class="text-info">NAME</span>
+        <button class="btn btn-sm btn-outline-info"
+                (click)="sort({name:'name', index: 0, dataType: 'ST', asc: !sortContent.asc})">
+          <i class="text-info fas fa-arrows-alt-v"></i>
+        </button>
+      </td>
+      <td>
+        <div class="d-flex justify-content-between">
+          <span class="text-info">Created by</span>
+          <button class="btn btn-sm btn-outline-info"
+                  (click)="sort({name:'createdBy', index: 0,  dataType: 'ST', asc: !sortContent.asc})">
+            <i class="text-info fas fa-arrows-alt-v"></i>
+          </button>
+        </div>
+      </td>
+      <td>
+        <div class="d-flex justify-content-between">
+          <span class="text-info">Created on</span>
+          <button class="btn btn-sm btn-outline-info"
+                  (click)="sort({name:'createdOn', index: 0,  dataType: 'DT', asc: !sortContent.asc})">
+            <i class="text-info fas fa-arrows-alt-v"></i>
+          </button>
+        </div>
+      </td>
+      <td>
+        <div class="d-flex justify-content-between">
+          <span class="text-info">Last Modified By</span>
+          <button class="btn btn-sm btn-outline-info"
+                  (click)="sort({name:'lastModifiedBy', index: 0,  dataType: 'ST', asc: !sortContent.asc})">
+            <i class="text-info fas fa-arrows-alt-v"></i>
+          </button>
+        </div>
+      </td>
+      <td>
+        <div class="d-flex justify-content-between">
+          <span class="text-info">Last Modified On</span>
+          <button class="btn btn-sm btn-outline-info"
+                  (click)="sort({name:'lastModifiedOn', index: 0,  dataType: 'DT', asc: !sortContent.asc})">
+            <i class="text-info fas fa-arrows-alt-v"></i>
+          </button>
+        </div>
+      </td>
+      <td>
+        <div class="d-flex justify-content-between">
+          <span class="text-info">Tasks</span>
+          <button class="btn btn-sm btn-outline-info"
+                  (click)="sort({name:'taskDtos', index: 0,  dataType: 'IN', asc: !sortContent.asc})">
+            <i class="text-info fas fa-arrows-alt-v"></i>
+          </button>
+        </div>
+      </td>
+    </div>
+  </tr>
+  <div>
+    <!-- LEAVE THIS DIV OTHERWISE THE FORM WILL NOT BE DISPLAYED browser check :-webkit-any(table, thead, tbody, tfoot, tr) > form:-internal-is-html {display: none !important;}-->
+    <form *ngIf="extendedFilterMode && filterForm" [formGroup]="filterForm">
+      <tr>
+    <span formArrayName="columnValueDtos">
+      <td *ngFor="let column of tableDefinition?.columnDetailDefinitionDtoList; let i = index" formGroupName="{{i}}"
+          [ngClass]="column.type== 'DE' ? 'description' : '' "
+      >
+        <input class="form-control mr-sm-2" type="text" placeholder="{{ column.name }}" formControlName="value"
+               (keyup)="onRunExtendedFilter()">
+      </td>
+    </span>
+        <td><input class="form-control mr-sm-2" type="text" placeholder="ID" formControlName="id"
+                   (keyup)="onRunExtendedFilter()"></td>
+        <td hidden><input class="form-control mr-sm-2" type="text" placeholder="NAME" formControlName="name"
+                          (keyup)="onRunExtendedFilter()"></td>
+        <td><input class="form-control mr-sm-2" type="text" placeholder="Created by" formControlName="createdBy"
+                   (keyup)="onRunExtendedFilter()"></td>
+        <td><input class="form-control mr-sm-2" type="text" placeholder="Created on" formControlName="createdOn"
+                   (keyup)="onRunExtendedFilter()"></td>
+        <td><input class="form-control mr-sm-2" type="text" placeholder="Last Modified By"
+                   formControlName="lastModifiedBy"
+                   (keyup)="onRunExtendedFilter()"></td>
+        <td><input class="form-control mr-sm-2" type="text" placeholder="Last Modified On"
+                   formControlName="lastModifiedOn"
+                   (keyup)="onRunExtendedFilter()"></td>
+        <td><input class="form-control mr-sm-2" type="text" placeholder="Tasks" formControlName="taskDtos"
+                   (keyup)="onRunExtendedFilter()"></td>
+      </tr>
+    </form>
+  </div>
+</div>

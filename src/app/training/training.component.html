@@ -1,0 +1,174 @@
+<div [ngClass]="theme ? 'my-themed':'candy-themed'">
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav role="navigation">
+      <mat-nav-list>
+        <a mat-list-item (click)="sidenav.close()">
+          <mat-icon>face</mat-icon>
+          <span class="nav-caption">Sign up</span></a>
+        <a mat-list-item routerLink="" (click)="sidenav.close()">
+          <mat-icon>person pin</mat-icon>
+          <span class="nav-caption">Login</span></a>
+        <a mat-list-item routerLink="" (click)="sidenav.close()">
+          <mat-icon>adb</mat-icon>
+          <span class="nav-caption">Training</span></a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <mat-toolbar color="primary">
+        <div>
+          <button mat-icon-button (click)="sidenav.toggle()">
+            <mat-icon>menu</mat-icon>
+          </button>
+        </div>
+        <div><a routerLink="/">MY JIRA</a></div>
+        <div fxFlex
+             fxLayout
+             fxLayoutAlign="flex-end" fxHide.xs>
+          <ul fxLayout fxLayoutGap="10px" class="navigation-items">
+            <li (click)="toggleTheme()">Change color</li>
+            <li><a routerLink="">SignUp</a></li>
+            <li><a routerLink="">Login</a></li>
+            <li><a routerLink="">Training</a></li>
+          </ul>
+        </div>
+      </mat-toolbar>
+      <main>
+        <section class="new-card"
+                 fxLayout
+                 fxLayoutAlign="center">
+          <mat-card fxFlex.xs="100%" fxFlex="50%">
+            <mat-card-title fxLayoutAlign="center">Main</mat-card-title>
+            <mat-card-content fxLayoutAlign="center">
+              <mat-form-field>
+                <mat-select placeholder="Abc">
+                  <mat-option value="a">A</mat-option>
+                  <mat-option value="c">C</mat-option>
+                  <mat-option value="a">B</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-card-content>
+            <mat-card-actions fxLayoutAlign="center">
+              <button type="submit" mat-button (click)="sidenav.toggle()" color="accent">Toggle SideNav</button>
+            </mat-card-actions>
+          </mat-card>
+        </section>
+        <section fxLayout="column" fxLayoutGap="50px" fxLayoutAlign="center center">
+          <div fxLayout fxLayoutGap="50px" fxLayoutAlign="center center">
+            <p>Determinate: {{progress}}%</p>
+            <mat-progress-spinner mode="determinate" [value]="progress"></mat-progress-spinner>
+            <mat-form-field>
+              <input #infoMessage matInput>
+            </mat-form-field>
+            <button mat-raised-button color="accent" (click)="onRerunTimer(infoMessage.value)">Restart</button>
+          </div>
+          <div fxLayout fxLayoutGap="50px" fxLayoutAlign="center center">
+            <p>Indeterminate:</p>
+            <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+          </div>
+        </section>
+
+        <section class="form"
+                 fxLayout
+                 fxLayoutAlign="center">
+          <mat-card fxFlex.xs="100%" fxFlex="50%">
+            <mat-card-content fxLayoutAlign="center">
+              <mat-form-field>
+                <input matInput value="Message?" placeholder="Message" #message>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput value="Close" placeholder="Action" #action>
+              </mat-form-field>
+            </mat-card-content>
+            <mat-card-actions fxLayoutAlign="center">
+              <button mat-button (click)="showSnackBar(message.value, action.value)">Show snack-bar</button>
+            </mat-card-actions>
+          </mat-card>
+        </section>
+
+        <section class="form"
+                 fxLayout
+                 fxLayoutAlign="center">
+          <mat-card fxFlex.xs="100%" fxFlex="50%">
+            <mat-card-title fxLayoutAlign="center">Form</mat-card-title>
+            <mat-card-content fxLayoutAlign="center">
+              <form fxLayout="column"
+                    fxLayoutAlign="center center"
+                    fxLayoutGap="10px"
+                    #f="ngForm"
+                    (submit)="onSubmit(f)">
+                <mat-form-field color="accent">
+                  <input
+                    type="email"
+                    matInput
+                    placeholder="Your email"
+                    ngModel
+                    name="email"
+                    email
+                    required
+                    #mailInput="ngModel"
+                  >
+                  <mat-error *ngIf="mailInput.hasError('required')">Email is required</mat-error>
+                  <mat-error *ngIf="!mailInput.hasError('required')">Email is invalid</mat-error>
+                </mat-form-field>
+                <mat-form-field color="accent"
+                                hintLabel="Min 2 characters.">
+                  <input
+                    type="password"
+                    matInput
+                    placeholder="Your password"
+                    ngModel
+                    name="password"
+                    required
+                    minlength="2"
+                    #pwInput="ngModel"
+                  >
+                  <mat-hint align="end">{{pwInput.value?.length}} / 2</mat-hint>
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput
+                         [matDatepicker]="picker"
+                         placeholder="Your Birthdate"
+                         [max]="maxDate"
+                         ngModel
+                         required
+                         name="bday">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <mat-checkbox
+                  ngModel
+                  name="terms"
+                  required
+                  labelPosition="before"
+                  color="primary"
+                >Terms Agreement
+                </mat-checkbox>
+                <button mat-icon-button color="accent">
+                  <mat-icon>home</mat-icon>
+                </button>
+                <button type="submit" mat-raised-button color="primary" [disabled]="f.invalid">
+                  <span>Hit</span>
+                </button>
+              </form>
+            </mat-card-content>
+            <mat-card-actions fxLayoutAlign="center">
+            </mat-card-actions>
+          </mat-card>
+        </section>
+
+        <section class="form"
+                 fxLayout
+                 fxLayoutAlign="center">
+          <mat-card fxFlex.xs="100%" fxFlex="70%">
+            <mat-card-title fxLayoutAlign="center">Table</mat-card-title>
+            <mat-card-content fxLayoutAlign="center">
+              <app-table fxFlex="100%"></app-table>
+            </mat-card-content>
+          </mat-card>
+        </section>
+
+      </main>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+

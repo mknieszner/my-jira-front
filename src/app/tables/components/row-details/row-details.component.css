@@ -1,0 +1,11 @@
+li, td {
+  border: 1px solid #32383e;
+  background-color: rgba(200, 200, 200, 0.05);
+  color: lightgray !important;
+}
+
+.form-control {
+  background-color: rgba(200,200,200,0.05);
+  border: none;
+  color: gray !important;
+}

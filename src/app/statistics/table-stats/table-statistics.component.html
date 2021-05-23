@@ -1,0 +1,367 @@
+<div *ngIf="selectedTableName$ | async">
+
+  <div *ngIf="tableContentState$ | async">
+
+    <div class="card"><!--                                                                                 ROWS INFO -->
+      <div class="card-header">
+        <h5 class="text-info text-center">{{ selectedTableName$ | async }}</h5>
+      </div>
+      <div class="card-body" style="background-color: transparent !important; padding: 20px">
+        <div class="card">
+          <div class="card-header">
+            Rows info:
+          </div>
+          <div class="card-body">
+            <div class="row d-flex justify-content-center" style="margin-top: 20px">
+              <div class="col-12 d-flex justify-content-center">
+
+                <div class="card bg-transparent" style="border: 1px solid #107180">
+                  <div class="align-middle" style="background-color: rgba(23,162,184,0.4)">
+                    <h3 class="text-white text-center">{{ tableInfo?.rows.length }} </h3>
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title text-center text-white">Rows</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-6 d-flex justify-content-center">
+
+                <div class="card bg-transparent" style="border: 1px solid #1c7430">
+                  <div class="align-middle" style="background-color: rgba(40,167,69,0.4)">
+                    <h3 class="text-white text-center">{{ tableInfo?.doneRows.length }} </h3>
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title text-center text-white">Done Rows</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-6 d-flex justify-content-center">
+                <div class="card bg-transparent" style="border: 1px solid #9a2530">
+                  <div class="align-middle" style="background-color: rgba(220,53,69,0.4)">
+                    <h3 class="text-white text-center">{{ tableInfo?.undoneRows.length }} </h3>
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title text-center text-white">Undone Rows</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="tableInfo" class="progress bg-transparent" style="margin-top: 20px">
+              <div class="progress-bar"
+                   style="background-color: rgba(40,167,69,0.4); border: 1px solid #1c7430"
+                   role="progressbar"
+                   [style.width]=" (tableInfo?.doneRows.length / tableInfo?.rows.length * 100 | number : '1.0-0') + '%'"
+                   attr.aria-valuenow="{{ tableInfo?.doneRows.length / tableInfo?.rows.length * 100 | number : '1.0-0' }}"
+                   attr.aria-valuemin="0"
+                   attr.aria-valuemax="100">
+              </div>
+              <div class="progress-bar"
+                   style="background-color: rgba(220,53,69,0.4); border: 1px solid #9a2530"
+                   role="progressbar"
+                   [style.width]="(tableInfo?.undoneRows.length / tableInfo?.rows.length * 100 | number : '1.0-0') + '%'"
+                   attr.aria-valuenow="{{ tableInfo?.undoneRows.length / tableInfo?.rows.length * 100 | number : '1.0-0' }}"
+                   attr.aria-valuemin="0"
+                   attr.aria-valuemax="100">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--                                                                                              ROWS INFO END-->
+
+    <div class="card"><!--                                 COLUMNS  INFO -->
+      <div class="card-header">Columns info:</div>
+      <div class="card-body" *ngIf="(tableHeaderState$ | async)">
+        <div class="row">
+
+          <div class="col-12 d-flex justify-content-center">
+
+            <div class="card" *ngIf="tableInfo?.columnInfo.numberInfo.length > 0">
+              <!--                          NUMBER COLUMNS INFO -->
+              <div class="card-header">Number info:</div>
+              <div class="card-body" *ngIf="(tableHeaderState$ | async)">
+                <table class="table bg-transparent table-responsive table-striped">
+                  <thead>
+                  <tr>
+                    <th>Column name</th>
+                    <th>Column number</th>
+                    <th>Sum</th>
+                    <th>Average</th>
+                    <th>Min</th>
+                    <th>Max</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let numberInfo of tableInfo?.columnInfo.numberInfo">
+                    <th>{{ (tableHeaderState$ | async)[0].columnDetailDefinitionDtoList[numberInfo.columnNumber]?.name
+                      }}
+                    </th>
+                    <td>{{ numberInfo.columnNumber }}</td>
+                    <td>{{ numberInfo.sum }}</td>
+                    <td>{{ numberInfo.avg | number : '1.2-2' }}</td>
+                    <td>{{ numberInfo.min }}</td>
+                    <td>{{numberInfo.max }}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!--                                                                                         NUMBER COLUMNS INFO END -->
+          </div>
+
+          <div class="col-12 col-md-6 d-flex justify-content-center">
+            <div class="card" *ngIf="tableInfo?.columnInfo.enumInfo.length > 0"><!--                        ENUM INFO -->
+              <div class="card-header">Enum info:</div>
+              <div class="card-body" *ngIf="(tableHeaderState$ | async)">
+                <div *ngFor="let enumInfoArray of tableInfo?.columnInfo.enumInfo,let i = index"
+                     style="border: 1px solid #32383e; padding: 20px; border-radius: 20px; margin: 10px; background-color: rgba(0,0,0,0.05)">
+
+                  <h5 style="padding: 20px">
+                    {{ (tableHeaderState$ | async)[0].columnDetailDefinitionDtoList[(enumInfoArray |
+                    clearArray)[i].columnNumber]?.name }}
+                  </h5>
+
+                  <div *ngIf="enumCharts[i].data.length > 0 && enumCharts[i].labels.length > 0" style="display: block">
+                    <canvas baseChart
+                            [datasets]="enumCharts[i].data"
+                            [labels]="enumCharts[i].labels"
+                            [legend]="enumCharts[i].legend"
+                            [chartType]="enumCharts[i].chartType"
+                            [options]="enumCharts[i].options">
+                    </canvas>
+                  </div>
+
+
+                  <table class="table table-responsive table-striped bg-transparent "
+                         style="margin-top: 30px">
+                    <thead class="border-secondary">
+                    <tr>
+                      <th>
+                        ENUM NAME
+                      </th>
+                      <th>
+                        SUM
+                      </th>
+                    </tr>
+                    </thead>
+                    <tbody class="border-secondary" *ngFor="let enumInfo of enumInfoArray | clearArray">
+                    <tr *ngIf="enumInfo">
+                      <td>
+                        {{ enumInfo.name }}
+                      </td>
+                      <td>
+                        {{ enumInfo.sum }}
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <!--                                                                                         ENUM COLUMNS INFO END -->
+          </div>
+
+          <div class="col-12 col-md-6 d-flex justify-content-center">
+
+            <div class="card" *ngIf="tableInfo?.columnInfo.dateInfo.length > 0">
+              <!--                            DATE COLUMNS INFO -->
+              <div class="card-header">
+                <span>
+                  DATE TYPE COLUMNS:
+                </span>
+              </div>
+              <div class="card-body">
+                <table class="table table-striped table-responsive bg-transparent ">
+                  <thead class="border-secondary">
+                  <tr>
+                    <th>
+                      COLUMN NAME
+                    </th>
+                    <th>
+                      MIN DATE
+                    </th>
+                    <th>
+                      MAX DATE
+                    </th>
+                  </tr>
+                  </thead>
+                  <tbody class="border-secondary">
+                  <tr *ngFor="let dateInfo of tableInfo?.columnInfo.dateInfo">
+                    <td>
+                      {{ (tableHeaderState$ | async)[0].columnDetailDefinitionDtoList[dateInfo.columnNumber]?.name }}
+                    </td>
+                    <td>
+                      {{ dateInfo.min | date:'fullDate' }}
+                    </td>
+                    <td>
+                      {{ dateInfo.max | date:'fullDate' }}
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!--                                                                                     DATE COLUMNS INFO END-->
+
+          </div>
+
+          <div class="col-12 col-md-6 d-flex justify-content-center">
+            <div class="card" *ngIf="tableInfo?.columnInfo.descriptionInfo.length > 0">
+              <!--                     DESCRIPTION COLUMNS INFO -->
+              <div class="card-header">Description info:</div>
+              <div class="card-body" *ngIf="(tableHeaderState$ | async)">
+                <table class="table bg-transparent table-responsive table-striped">
+                  <thead>
+                  <tr>
+                    <th>Column name</th>
+                    <th>Column number</th>
+                    <th>Average</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let descriptionInfo of tableInfo?.columnInfo.descriptionInfo">
+                    <th>{{ (tableHeaderState$ |async)[0].columnDetailDefinitionDtoList[descriptionInfo.columnNumber]?.name }}
+                    </th>
+                    <td>{{ descriptionInfo.columnNumber }}</td>
+                    <td>{{ descriptionInfo.avgLength | number : '1.2-2'}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!--                                                                                         DESCRIPTION COLUMNS INFO END -->
+
+            <div class="card" *ngIf="tableInfo?.columnInfo.shortTextInfo.length > 0">
+              <!--                       SHORT TEXT COLUMNS INFO -->
+              <div class="card-header">Short text info:</div>
+              <div class="card-body" *ngIf="(tableHeaderState$ | async)">
+
+                <table class="table bg-transparent table-responsive table-striped">
+                  <thead>
+                  <tr>
+                    <th>Column name</th>
+                    <th>Column number</th>
+                    <th>Average</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let shortTextInfo of tableInfo?.columnInfo.shortTextInfo">
+                    <th>{{ (tableHeaderState$ | async)[0].columnDetailDefinitionDtoList[shortTextInfo.columnNumber]?.name
+                      }}
+                    </th>
+                    <td>{{ shortTextInfo.columnNumber }}</td>
+                    <td>{{ shortTextInfo.avgLength | number : '1.2-2'}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!--                                                                                           SHORT TEXT COLUMNS INFO END -->
+
+          </div>
+
+        </div>
+        <!--                                                                                             COLUMNS INFO END-->
+      </div>
+    </div>
+    <div class="card">
+      <!--                                                                                    TASKS INFO -->
+      <div class="card-header">Tasks info:</div>
+      <div class="card-body">
+        <div class="row" style="margin-top: 20px">
+          <div class="col-12 d-flex justify-content-center">
+            <div class="card border-info bg-transparent">
+              <div class="align-middle" style="background-color: rgba(23,162,184,0.4)">
+                <h3 class="text-white text-center">{{ tasksInfo?.tasks.length }} </h3>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title text-center text-white">Tasks</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 20px">
+          <div class="col-6 col-md-3 d-flex justify-content-center">
+            <div class="card border-danger bg-transparent" style="border: 1px solid #9a2530">
+              <div class="align-middle" style="background-color: rgba(220,53,69,0.4)">
+                <h3 class="text-white text-center">{{ tasksInfo?.unassignedTasks.length }} </h3>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title text-center text-white">Unassigned Tasks</h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3 d-flex justify-content-center">
+            <div class="card bg-transparent" style="border: 1px solid #b28704">
+              <div class="align-middle" style="background-color: rgba(255,193,7,0.4)">
+                <h3 class="text-white text-center">{{ tasksInfo?.assignedTasks.length }} </h3>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title text-center text-white">Assigned Tasks</h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3 d-flex justify-content-center">
+            <div class="card bg-transparent" style="border: 1px solid #0056b2">
+              <div class="align-middle" style="background-color: rgba(0,123,255,0.4)">
+                <h3 class="text-white text-center">{{ tasksInfo?.inProgressTasks.length }} </h3>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title text-center text-white">In progress Tasks</h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3 d-flex justify-content-center">
+            <div class="card bg-transparent" style="border: 1px solid #1c7430">
+              <div class="align-middle" style="background-color: rgba(40,167,69,0.4)">
+                <h3 class="text-white text-center">{{ tasksInfo?.doneTasks.length }} </h3>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title text-center text-white">Done Tasks</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="progress bg-transparent" *ngIf="tasksInfo?.tasks.length > 0" style="margin-top: 20px">
+          <div class="row">
+            <div class="progress-bar"
+                 style="background-color: rgba(220,53,69,0.4); border: 1px solid #9a2530"
+                 role="progressbar"
+                 [style.width]=" (tasksInfo?.unassignedTasks.length / tasksInfo?.tasks.length * 100 | number : '1.0-0') + '%'"
+                 attr.aria-valuenow="{{ tasksInfo?.unassignedTasks.length / tasksInfo?.tasks.length * 100 | number : '1.0-0' }}"
+                 attr.aria-valuemin="0"
+                 attr.aria-valuemax="100">
+            </div>
+            <div class="progress-bar"
+                 style="background-color: rgba(255,193,7,0.4); border: 1px solid #b28704"
+                 role="progressbar"
+                 [style.width]="(tasksInfo?.assignedTasks.length / tasksInfo?.tasks.length * 100 | number : '1.0-0') + '%'"
+                 attr.aria-valuenow="{{ tasksInfo?.assignedTasks.length / tasksInfo?.tasks.length * 100 | number : '1.0-0' }}"
+                 attr.aria-valuemin="0"
+                 attr.aria-valuemax="100">
+            </div>
+            <div class="progress-bar"
+                 style="background-color: rgba(0,123,255,0.4); border: 1px solid #0056b2"
+                 role="progressbar"
+                 [style.width]="(tasksInfo?.inProgressTasks.length / tasksInfo?.tasks.length * 100 | number : '1.0-0') + '%'"
+                 attr.aria-valuenow="{{ tasksInfo?.inProgressTasks.length / tasksInfo?.tasks.length * 100 | number : '1.0-0' }}"
+                 attr.aria-valuemin="0"
+                 attr.aria-valuemax="100">
+            </div>
+            <div class="progress-bar"
+                 style="background-color: rgba(40,167,69,0.4); border: 1px solid #1c7430"
+                 role="progressbar"
+                 [style.width]="(tasksInfo?.doneTasks.length / tasksInfo?.tasks.length * 100 | number : '1.0-0') + '%'"
+                 attr.aria-valuenow="{{ tasksInfo?.doneTasks.length / tasksInfo?.tasks.length * 100 | number : '1.0-0' }}"
+                 attr.aria-valuemin="0"
+                 attr.aria-valuemax="100">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!--                                                                     TASKS INFO -->
+  </div>
+</div>

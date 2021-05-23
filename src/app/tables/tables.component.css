@@ -1,0 +1,60 @@
+.header-fixed {
+  width: 100%
+}
+
+.header-fixed > thead,
+.header-fixed > tbody,
+.header-fixed > thead > tr,
+.header-fixed > tbody > tr,
+.header-fixed > thead > tr > th,
+.header-fixed > tbody > tr > td {
+  display: block;
+}
+
+.header-fixed > tbody > tr:after,
+.header-fixed > thead > tr:after {
+  content: ' ';
+  display: block;
+  visibility: hidden;
+  clear: both;
+}
+
+.header-fixed > tbody {
+  overflow: hidden;
+  overflow-y: auto;
+  height: 75vh;
+}
+
+.header-fixed > tbody > tr > td,
+.header-fixed > thead > tr > th {
+  width: 20%;
+  float: left;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 0px;
+  height: 10px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 5px;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: grey;
+  border-radius: 10px;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: darkgrey;
+}
+
+tbody {
+  max-height: 700px;
+  height: auto;
+}
+
+table {
+  margin-top: 10px;
+}

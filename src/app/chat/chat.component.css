@@ -1,0 +1,76 @@
+li {
+  border: 1px solid #32383e;
+  background-color: rgba(200, 200, 200, 0.05);
+  color: gray !important;
+}
+
+li:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+input, select, textarea {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+#chatDiv {
+  height: 60vh;
+  overflow-y: scroll;
+}
+
+.jumbotron{
+  font-size: 0.8rem;
+  margin: 20px;
+  padding: 20px;
+}
+
+@media (max-width: 650px) {
+  #chatDiv {
+    height: 70vh;
+  }
+  #userList {
+    margin: 5px;
+    padding: 5px;
+  }
+  #chatContent{
+    margin: 5px;
+    padding: 5px;
+  }
+  .jumbotron{
+    font-size: 0.8rem;
+    margin: 0;
+    padding: 0;
+  }
+  .alert {
+    height: 80%;
+    padding: 5px !important;
+  }
+}
+#chatContent{
+  margin: 0px;
+  padding: 0px;
+}
+
+.jumbotron {
+  background: none;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: grey;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: darkgrey;
+}

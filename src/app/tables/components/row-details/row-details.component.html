@@ -1,0 +1,201 @@
+<div class="panel" style="border: solid 2px #343a40; border-radius: 8px">
+
+  <div class="panel-heading text-center" style="background-color: rgba(0,0,0,0.05); padding: 10px">
+    <div class="btn-group">
+      <button type="button" class="btn btn-outline-secondary" *ngIf="mode === RowDetailsMode.DISPLAY"
+              (click)="closeEditTab()">Close
+      </button>
+      <button type="button" class="btn btn-outline-secondary" *ngIf="mode == RowDetailsMode.EDIT && row?.id"
+              (click)="onSaveUpdatedRow()">Saves
+      </button>
+      <button type="button" class="btn btn-outline-secondary" *ngIf="row?.id"
+              (click)="toggleMode()"> {{ mode === RowDetailsMode.EDIT ? 'Cancel' : 'Edit' }}</button>
+      <button type="button" class="btn btn-outline-secondary" *ngIf="!row?.id" (click)="onSaveNewRow()">Save</button>
+      <button type="button" class="btn btn-outline-secondary" *ngIf="mode === RowDetailsMode.DISPLAY && row?.id"
+              (click)="toggleExtendedRowView()">{{extendedRowView ? 'Reduce' : 'Extend'}}</button>
+      <button type="button" class="btn btn-outline-secondary text-danger"
+              *ngIf="row?.id && mode === RowDetailsMode.DISPLAY" (click)="onDeleteRow()"> Delete
+      </button>
+    </div>
+  </div>
+
+  <div class="panel-body" style="padding: 10px">
+    <div *ngIf="mode === RowDetailsMode.EDIT">
+      <form [formGroup]="rowForm" style="padding-left: 10px" style="padding: 5px">
+        <div formArrayName="columnValueDtos">
+          <div *ngFor="let cell of rowForm.get('columnValueDtos').controls;let j = index">
+            <div [ngSwitch]="(cell.value | valueOnKey).key" formGroupName="{{j}}">
+              <div *ngSwitchCase="'DT'" class="form-group" style="margin-top: 10px">
+                <label class="text-info"> {{ tableDefinition.columnDetailDefinitionDtoList[j]?.name }} </label>
+                <input type="datetime-local"
+                       formControlName="DT"
+                       class="form-control"
+                >
+              </div>
+              <div *ngSwitchCase="'ST'" class="form-group" style="margin-top: 10px">
+                <label class="text-info"> {{ tableDefinition.columnDetailDefinitionDtoList[j]?.name }} </label>
+                <input formControlName="ST"
+                       [type]="'text'"
+                       class="form-control"
+                >
+              </div>
+              <div *ngSwitchCase="'DE'" class="form-group" style="margin-top: 10px">
+                <label class="text-info"> {{ tableDefinition.columnDetailDefinitionDtoList[j]?.name }} </label>
+                <textarea cols="30" rows="10"
+                          formControlName="DE"
+                          class="form-control"
+
+                >
+                </textarea>
+              </div>
+              <div *ngSwitchCase="'IN'" class="form-group" style="margin-top: 10px">
+                <label class="text-info"> {{ tableDefinition.columnDetailDefinitionDtoList[j]?.name }} </label>
+                <input formControlName="IN"
+                       [type]="'number'"
+                       class="form-control"
+
+                >
+              </div>
+              <div *ngSwitchCase="'EN'" class="form-group" style="margin-top: 10px">
+                <label class="text-info"> {{ tableDefinition.columnDetailDefinitionDtoList[j]?.name }} </label>
+                <select class="form-control"
+                        formControlName="EN"
+                        style="height: 35px"
+
+                >
+                  <option *ngFor="let option of tableDefinition.columnDetailDefinitionDtoList[j]?.optionList"
+                          [value]="option.value"
+                          [selected]="row?.columnValueDtos[j]['EN'].value == option.value"
+                  >{{ option.value }}
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="mode === RowDetailsMode.DISPLAY">
+          <div class="form-group">
+            <label for="id" class="text-info">ID:</label>
+            <input type="number"
+                   id="id"
+                   formControlName="id"
+                   class="form-control"
+                   readonly
+                   required
+            >
+          </div>
+          <div class="form-group" hidden>
+            <label for="name" class="text-info">Name:</label>
+            <input type="text"
+                   id="name"
+                   formControlName="name"
+                   class="form-control"
+                   readonly
+            >
+          </div>
+          <div class="form-group">
+            <label for="createdBy" class="text-info">Created By:</label>
+            <input type="text"
+                   id="createdBy"
+                   formControlName="createdBy"
+                   class="form-control"
+                   readonly
+                   required
+            >
+          </div>
+          <div class="form-group">
+            <label class="text-info">Created On:</label>
+            <input type="datetime-local"
+                   formControlName="createdOn"
+                   class="form-control"
+                   readonly
+                   required
+            >
+          </div>
+          <div class="form-group">
+            <label for="lastModifiedBy" class="text-info">Last modified by:</label>
+            <input type="text"
+                   id="lastModifiedBy"
+                   formControlName="lastModifiedBy"
+                   class="form-control"
+                   readonly
+                   required
+            >
+          </div>
+          <div class="form-group" disabled>
+            <label for="lastModifiedOn" class="text-info">Last modified on:</label>
+            <input type="datetime-local"
+                   id="lastModifiedOn"
+                   formControlName="lastModifiedOn"
+                   class="form-control"
+                   readonly
+                   required
+            >
+          </div>
+        </div>
+      </form>
+    </div>
+
+
+    <div *ngIf="mode == RowDetailsMode.DISPLAY && row?.id">
+      <table class="table">
+        <tbody>
+        <tr *ngFor="let cellValue of row?.columnValueDtos; let i = index;">
+          <td><span class="text-info">
+            {{ tableDefinition.columnDetailDefinitionDtoList[i]?.name }}</span>
+          </td>
+          <td>
+            {{(cellValue | valueOnKey).value.value }}
+          </td>
+        </tr>
+        <tr *ngIf="extendedRowView">
+          <td><span class="text-info">ID</span></td>
+          <td>{{ row?.id }}</td>
+        </tr>
+        <tr *ngIf="extendedRowView" hidden>
+          <td><span class="text-info">Name</span></td>
+          <td>{{ row?.name }}</td>
+        </tr>
+        <tr *ngIf="extendedRowView">
+          <td><span class="text-info">Created by</span></td>
+          <td>{{ row?.createdBy}}</td>
+        </tr>
+        <tr *ngIf="extendedRowView">
+          <td><span class="text-info">Created on</span></td>
+          <td>{{ row?.createdOn }}</td>
+        </tr>
+        <tr *ngIf="extendedRowView">
+          <td><span class="text-info">Last modified by</span></td>
+          <td>{{ row.lastModifiedBy }}</td>
+        </tr>
+        <tr *ngIf="extendedRowView">
+          <td><span class="text-info">Last modified on</span></td>
+          <td>{{ row.lastModifiedOn }}</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <ul class="list-group" style="margin-bottom: 0">
+        <li class="list-group-item text-white text-center" style="background-color: rgba(0,0,0,0.05);">
+          <h5 *ngIf="row.taskDtos?.length <= 0">NO TASKS</h5>
+          <h5 *ngIf="row.taskDtos?.length > 0">TASKS</h5>
+          <span class="btn btn-outline-secondary" (click)="onAddTask()">Add Task</span>
+        </li>
+        <div *ngFor="let task of row?.taskDtos; let i = index;">
+          <li class="list-group-item d-flex justify-content-between align-items-center" style="margin-top: 3px">
+              <span class="btn btn-outline-secondary text-info"
+                    (click)="task.id == selectedTask?.id ? onShowTask(null) : onShowTask(task)"> {{task.name }} </span>
+            <span class="btn btn-outline-secondary text-danger" (click)="onDeleteTask(task.id)"
+                  *ngIf="task.id == selectedTask?.id"> Delete Task</span>
+            <span class="btn btn-outline-secondary" (click)="onShowTaskDetails(task)">Details</span>
+          </li>
+          <div *ngIf="task.id == selectedTask?.id">
+            <li class="list-group-item"> ID: {{task.id}}</li>
+            <li class="list-group-item"> Name: {{task.name}}</li>
+            <li class="list-group-item"> Description: {{task.description}}</li>
+            <li class="list-group-item"> Status: {{task.status}}</li>
+          </div>
+        </div>
+      </ul>
+    </div>
+  </div>
+</div>

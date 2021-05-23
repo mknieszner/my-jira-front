@@ -1,0 +1,66 @@
+<div *ngIf="role && !(newRoleMode | async)">
+  <table class="table table-bordered table-striped">
+    <tbody>
+    <tr>
+      <td><span class="text-info">ID:</span></td>
+      <td>
+        <div class="d-flex justify-content-between">
+          <span> {{ role.id }} </span>
+          <button class="btn btn-outline-secondary text-danger" mat-button (click)="showSnackBar('Really?')">Delete Role</button>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="text-info">NAME:</span></td>
+      <td>{{ role.name }}</td>
+    </tr>
+    <tr>
+      <td><span class="text-info">DESCRIPTION:</span></td>
+      <td> {{ role.description }}</td>
+    </tr>
+    <tr>
+      <td><span class="text-info">USERS</span></td>
+      <td>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let user of role.userDtos" style="background-color: rgba(0, 0, 0, 0.05) !important;">{{user.username}}</li>
+        </ul>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div *ngIf="editUserMode && !(newRoleMode | async)">
+    <form [formGroup]="userForm" class="form-group">
+      <div class="input-group">
+        <select class="form-control border-secondary" formControlName="user">
+          <option selected>- Select -</option>
+          <option *ngFor="let user of (users|async)"> {{ user.username }}</option>
+        </select>
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" (click)="postAddUser()">Add</button>
+          <button class="btn btn-outline-secondary" (click)="postRemoveUser()">Remove</button>
+          <button class="btn btn-outline-secondary" (click)="abortAddUser()">Abort</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div *ngIf="!editUserMode">
+    <button class="btn btn-outline-secondary" (click)="onEditUserMode()">Edit Role</button>
+  </div>
+</div>
+
+<div *ngIf="(newRoleMode | async)">
+  <form>
+    <div class="form-group">
+      <label class="text-info">Role name:</label>
+      <input type="text" class="form-control border-secondary" #name>
+    </div>
+    <div class="form-group">
+      <label class="text-info">Role description:</label>
+      <textarea rows="6" class="form-control border-secondary" #description></textarea>
+    </div>
+    <div class="form-group">
+      <button (click)="onSubmitRole(name.value, description.value)" class="btn btn-outline-secondary">Submit</button>
+      <button (click)="onAbortSubmitRole()" class="btn btn-outline-secondary">Close</button>
+    </div>
+  </form>
+</div>

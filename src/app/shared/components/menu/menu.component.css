@@ -1,0 +1,36 @@
+a.bg-dark:hover {
+  background-color: #343a40!important;
+}
+
+li {
+  background-color: rgba(200,200,200,0.05);
+  border: none;
+}
+
+.form-control {
+  background-color: rgba(200,200,200,0.05);
+  border: none;
+}
+
+tableScroll{
+  overflow-x: auto;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 0px;
+  height: 5px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 5px;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: grey;
+  border-radius: 10px;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: darkgrey;
+}

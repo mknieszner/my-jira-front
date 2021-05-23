@@ -1,0 +1,58 @@
+<div class="row" style="margin: 0 10px;padding: 0;">
+  <div
+    [ngClass]="rowDetailsVisible ? (taskDetailsVisible ? 'col-12 col-md-6 col-lg-4' : 'col-12 col-md-6 col-lg-4') : 'd-none'"
+    style="margin: 41px 0">
+    <app-row-details *ngIf="rowDetailsVisible"
+                     [row]="detailsRow"
+                     [tableDefinition]="tableDefinition"
+                     (displayTaskDetails)="showTaskDetails($event)"
+                     (close)="hideRowDetails()"></app-row-details>
+  </div>
+  <div [ngClass]="taskDetailsVisible ? 'col-12 col-md-6 col-lg-4' : 'd-none'" style="margin: 41px 0">
+    <app-task *ngIf="taskDetailsVisible"
+              [row]="detailsRow"
+              [task]="taskDetails"
+              (close)="hideTaskDetails()"></app-task>
+  </div>
+  <div [ngClass]="rowDetailsVisible
+    ? (taskDetailsVisible ? 'col-lg-4' : 'col-md-6 col-lg-8')
+    : ('col-12')" style="padding: 0">
+    <div class="panel">
+      {{showSpinner | json}}
+      <app-menu *ngIf="(tableState$ | async).tablesDetails.length != 0"
+                [parent]="'tables'"
+                (chosenNameChanged)="setTable($event)"
+                (addNewRow)="showRowDetails()"></app-menu>
+      <div class="panel-body" style="padding: 0">
+
+        <div *ngIf="tableDefinition && !showSpinner">
+          <div class="table-responsive" style="border-radius: 10px">
+            <table
+              class="table table-hover header-fixed table-striped"
+              style="margin-bottom: 0"
+            >
+              <thead>
+              <app-table-header
+                [tableDefinition]="tableDefinition"
+                [extendedTableView]="extendedTableView"
+                [sortContent]="sortContent"
+                [extendedFilterMode]="extendedFilterMode">
+              </app-table-header>
+              </thead>
+              <tbody style="max-height: 700px; height: auto; background-color: transparent">
+              <app-row
+                [tableState$]="tableState$"
+                (editRow)="showRowDetails(row)"
+                *ngFor="let row of ((tableState$ | async).tableContent)  | extendedFilter: extendedFilterContent : filterSelect | orderBy : sortContentValue"
+                [row]="row"
+              >
+              </app-row>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <app-spinner *ngIf="tableDefinition && showSpinner"></app-spinner>
+      </div>
+    </div>
+  </div>
+</div>

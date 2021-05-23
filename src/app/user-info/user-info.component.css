@@ -1,0 +1,23 @@
+table {
+  background-color: rgba(0,0,0,0.05);
+}
+td {
+  border: 1px solid #32383e;
+  padding: 30px;
+}
+
+li {
+  border: 1px solid #32383e;
+  background-color: rgba(200, 200, 200, 0.05);
+  color: gray !important;
+  padding: 30px;
+}
+
+.form-control {
+  background-color: rgba(0,0,0,0.05);
+  border: 1px solid #32383e;
+}
+
+.jumbotron {
+  background: none;
+}

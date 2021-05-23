@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-md navbar-dark" style="margin-bottom: 0">
+  <!--*ngIf="(token | async)"-->
+  <div class="navbar-brand text-info">MY JIRA</div>
+  <h5><span *ngIf="chatChanged" (click)="toChat()" style="margin-right: 20px" class="nav badge badge-primary">Chat</span></h5>
+  <h5><span *ngIf="(newTaskState | async)" (click)="onNewTasksSeen()" style="margin-right: 10px" class="nav badge badge-danger">Tasks</span></h5>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+          aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav mr-auto" *ngIf="token">
+      <li class="nav-item " data-toggle="collapse" data-target=".navbar-collapse.show" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a class="nav-link text-info" routerLink="/home" >Home</a></li>
+      <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show" routerLinkActive="active"><a class="nav-link text-info" routerLink="/tables" >Tables</a></li>
+      <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show" routerLinkActive="active"><a class="nav-link text-info" routerLink="/users" >Users</a></li>
+      <li *ngIf="(isAdmin | async)" data-toggle="collapse" data-target=".navbar-collapse.show" class="nav-item" routerLinkActive="active"><a class="nav-link text-info" routerLink="/definitions" >Definition</a></li>
+      <li *ngIf="(isAdmin | async)" data-toggle="collapse" data-target=".navbar-collapse.show" class="nav-item" routerLinkActive="active"><a class="nav-link text-info" routerLink="/roles" >Roles</a></li>
+      <li *ngIf="(isAdmin | async)" data-toggle="collapse" data-target=".navbar-collapse.show" class="nav-item" routerLinkActive="active"><a class="nav-link text-info" routerLink="/statistics" >Statistics</a></li>
+      <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show" routerLinkActive="active"><a class="nav-link text-info" routerLink="/chat" >Chat</a></li>
+      <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show" routerLinkActive="active"><a class="nav-link text-info" routerLink="/training" >Training</a></li>
+    </ul>
+
+
+    <span class="nav navbar-text font-weight-bold" style="margin-right: 20px" *ngIf="token">
+      <a class="text-info" routerLink="/user-info" >Welcome : {{ username | async }}</a>
+    </span>
+    <span class="navbar-text">
+      <a class="nav-link text-info" routerLink="/signin" *ngIf="!token" >Login</a>
+    </span>
+    <span class="navbar-text">
+      <a class="nav-link text-info" (click)="onLogout()" *ngIf="token" routerLink="/" >Logout</a>
+    </span>
+  </div>
+</nav>

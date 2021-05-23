@@ -1,0 +1,32 @@
+td {
+  min-width: 100px;
+  width: 100px;
+  border: 1px solid #083E46;
+}
+
+td.description {
+  min-width: 200px;
+  width: 200px;
+}
+
+tr {
+  border: 1px solid #083E46;
+}
+
+.form-control {
+  background-color: rgba(200,200,200,0.05);
+  border: none;
+  color: gray !important;
+}
+
+@media (min-width: 768px) {
+  td {
+    min-width: 200px;
+    width: 200px;
+    border: 1px solid #083E46;
+  }
+  td.description {
+    min-width: 400px;
+    width: 400px;
+  }
+}

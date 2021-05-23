@@ -1,0 +1,88 @@
+<div *ngIf="!!task">
+  <ul class="list-group">
+    <li class="list-group-item text-white text-center" style="background-color: rgba(0,0,0,0.05);">
+      <button class="btn btn-outline-secondary" (click)="closeTaskTab()">Hide Details</button>
+    </li>
+    <li class="list-group-item">
+      <div class="list-group-item d-flex justify-content-between">
+        <span class="text-info">ID: </span>
+        <span>{{task.id}}</span>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="list-group-item d-flex justify-content-between">
+        <span class="text-info">Name:</span>
+        <span>{{ task.name}}</span>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="list-group-item d-flex justify-content-between">
+        <span class="text-info">Description:</span>
+        <span>{{ task.description }}</span>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="list-group-item d-flex justify-content-between">
+        <span class="text-info">Status:</span>
+        <span>{{task.status}}</span>
+      </div>
+    </li>
+    <li class="list-group-item text-white text-center" style="background-color: rgba(0,0,0,0.05);">
+      <label>Assign user</label>
+      <form class="form-group">
+        <div class="form-group d-flex justify-content-between align-items-center" style="margin-top: 5px">
+          <div class="input-group">
+            <select #userContol class="form-control">
+              <option *ngIf="(tableUsers| async).length === 0">No available users</option>
+              <option *ngFor="let tableUser of (tableUsers| async)"> {{ tableUser }}</option>
+            </select>
+            <div class="input-group-append" *ngIf="(tableUsers| async).length != 0">
+              <button class="btn btn-outline-secondary" [disabled]="" (click)="onAssignUserToTask(userContol.value)">+</button>
+              <button class="btn btn-outline-secondary" (click)="onRemoveUserFromTask(userContol.value)">-</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </li>
+    <li class="list-group-item text-white text-center" style="background-color: rgba(0,0,0,0.05);"><p
+      style="margin-bottom: 3px">{{ task.userNames?.length <= 0 ? 'No assigned users' : 'Assigned Users:'}}</p></li>
+    <li class="list-group-item" *ngFor=" let username of task.userNames">
+      <span class="text-info">{{username}}</span>
+    </li>
+    <li class="list-group-item text-white text-center" style="background-color: rgba(0,0,0,0.05);">
+      {{ task?.taskDtos?.length <= 0 ? 'No tasks' : 'Assigned Tasks:'}}
+    </li>
+    <li class="list-group-item" *ngFor="let taskDto of task.taskDtos">
+      <!--<app-task></app-task>-->
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="!task">
+  <form>
+    <div class="form-group">
+      <label class="text-info">Name:</label>
+      <input class="form-control" type="text" #nameEl>
+    </div>
+    <div class="form-group">
+      <label class="text-info">Description:</label>
+      <textarea rows="20" class="form-control" #descriptionEl></textarea>
+    </div>
+    <div class="form-group">
+      <label class="text-info">Status:</label>
+      <select class="form-control" #statusEl>
+        <option> {{status.ASSIGNED}}</option>
+        <option> {{status.ASSIGNED}}</option>
+        <option> {{status.IN_PROGRESS}}</option>
+        <option> {{status.DONE}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-dark text-white"
+              (click)="onSaveRowNewTask({name: nameEl.value, description: descriptionEl.value,status: statusEl.value})">
+        Submit
+      </button>
+      <button class="btn btn-dark text-white" (click)="closeTaskTab()">Close</button>
+    </div>
+  </form>
+</div>

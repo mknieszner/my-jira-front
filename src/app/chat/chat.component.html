@@ -1,0 +1,53 @@
+<div class="jumbotron">
+  <div class="row d-flex justify-content-center">
+    <div class="col-12" id="chatContent">
+      <ul class="list-group">
+        <li class="list-group-item" style="padding-top: 0;padding-bottom: 0">
+          <div class="btn-group">
+            <button class="btn "
+                    [ngClass]="(chatNameState | async) === 'global' ? 'btn-info': 'btn-outline-info'"
+                    (click)="setChat('global')">
+              Global chat
+              <span *ngIf="unreadMessages.get('global')" class="badge badge-danger">New</span>
+            </button>
+            <div *ngFor="let activeWsUser of (activeWsUsers | async)">
+              <button *ngIf="activeWsUser != (currentUser |async)"
+                      class="btn"
+                      [ngClass]="(chatNameState | async) === activeWsUser ? 'btn-info': 'btn-outline-info'"
+                      (click)="setChat(activeWsUser)">
+                {{activeWsUser}}
+                <span *ngIf="unreadMessages.get(activeWsUser)" class="badge badge-primary">New</span>
+              </button>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div #chatDiv id="chatDiv">
+            <div *ngFor="let message of messagesMap.get(chatNameState | async)">
+              <div *ngIf="(message.senderName) === (currentUser |async)" class="alert border-primary text-primary"
+                   style="width: 70%; margin-bottom: 5px;">{{message.senderName}} : {{message.message}}
+              </div>
+              <div *ngIf="(message.senderName) !== (currentUser |async)" class="alert border-success text-success"
+                   style="width: 70%; margin: 0 0 5px 30%">{{message.senderName}} : {{message.message}}
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="navbar navbar-default navbar-fixed-bottom">
+  <div class="container">
+    <div class="input-group">
+      <input class="form-control border-secondary" type="text" #messageContent
+             (keyup.enter)="post.click()">
+      <div class="input-group-append">
+        <button #post (click)="postMessage(messageContent.value);messageContent.value = '';"
+                class="btn btn-default">Post
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

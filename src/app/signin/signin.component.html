@@ -1,0 +1,43 @@
+<div class="jumbotron vertical-center text-center ">
+  <div class="container " style="margin: 0;">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-6">
+        <div class="card">
+          <div class="card-header text-white text-center">
+            <h3 class="text-info">MY JIRA</h3>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <form [formGroup]="signinForm">
+                <div class="form-group">
+                  <input type="text" aria-describedby="usernameHelpInline" name="username" placeholder="username"
+                         class="form-control" formControlName="username">
+                  <small id="usernameHelpInline" class="text-muted">
+                    Must be 8-20 characters long.
+                  </small>
+                </div>
+                <div class="form-group">
+                  <input type="password" aria-describedby="passwordHelpInline" name="password" placeholder="password"
+                         class="form-control"
+                         formControlName="password">
+                  <small id="passwordHelpInline" class="text-muted">
+                    Must be 8-20 characters long.
+                  </small>
+                </div>
+                <div class="btn-group">
+                  <button value="Sign In" class="btn btn-outline-info" (click)="onSignin()">Sign In</button>
+                </div>
+                <div class="alert alert-danger" *ngIf="loginFailureInfo | async">
+                  <span> {{ loginFailureInfo | async }} </span>
+                </div>
+                <div class="alert alert-success" *ngIf="logoutInfo | async">
+                  <span> {{ logoutInfo | async}} </span>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

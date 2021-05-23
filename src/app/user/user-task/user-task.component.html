@@ -1,0 +1,44 @@
+<div *ngIf="task && !editTaskMode">
+  <li class="list-group-item d-flex justify-content-between" style="background-color: rgba(0,0,0,0.05);">
+    <span>Name: {{task.name}}</span>
+    <button class="btn btn-outline-secondary" (click)="onEditTaskMode(true)">Edit</button>
+    <button class="btn btn-outline-secondary" (click)="onCloseTaskMode()">Close</button>
+  </li>
+  <li class="list-group-item"> ID: {{task.id}}</li>
+  <li class="list-group-item"> Description: {{task.description}}</li>
+  <li class="list-group-item"> Status: {{task.status}}</li>
+  <li class="list-group-item" style="background-color: rgba(0,0,0,0.05);">{{task.userNames.length <= 0 ? 'No users' : 'Assigned Users:'}}</li>
+  <li *ngFor=" let username of task.userNames" class="list-group-item"> {{username}}</li>
+  <li class="list-group-item" style="background-color: rgba(0,0,0,0.05);">{{ task.taskDtos.length <= 0 ? 'No tasks' : 'Assigned Tasks:' }}</li>
+  <li class="list-group-item" *ngFor="let taskDto of task.taskDtos">
+    <app-user-task [task]="taskDto"></app-user-task>
+  </li>
+</div>
+
+<div *ngIf="task && editTaskMode">
+  <form [formGroup]="editedTaskForm" #f>
+    <div class="form-group">
+      <label class="text-info">Name:</label>
+      <input class="form-control" type="text" formControlName="name">
+    </div>
+    <div class="form-group">
+      <label class="text-info">Description:</label>
+      <textarea rows="20" class="form-control"  formControlName="description"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="text-info">Status:</label>
+      <select class="form-control"  formControlName="status">
+        <option [selected]="task.status == status.UNASSIGNED" value="{{ status.UNASSIGNED }}"> {{ status.UNASSIGNED }} </option>
+        <option [selected]="task.status == status.ASSIGNED" value="{{ status.ASSIGNED }}"> {{ status.ASSIGNED }} </option>
+        <option [selected]="task.status == status.IN_PROGRESS" value="{{ status.IN_PROGRESS }}"> {{ status.IN_PROGRESS }} </option>
+        <option [selected]="task.status == status.DONE" value="{{ status.DONE }}"> {{ status.DONE }} </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-outline-secondary" (click)="onSaveEditedTask(f)">
+        Submit
+      </button>
+      <button class="btn btn-outline-secondary" (click)="onEditTaskMode(false)">Abort</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,85 @@
+<div class="jumbotron">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h3 class="text-center text-info">Table Definition</h3>
+        <form [formGroup]="definitionForm" style="margin-top: 10px">
+          <div class="form-group">
+            <input type="text"
+                   id="table-name"
+                   formControlName="name"
+                   placeholder="Table Name"
+                   class="form-control  border-secondary"
+                   required
+            >
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-12" formArrayName="columnDetailDefinitionDtoList">
+              <div class="row justify-content-center"
+                   *ngFor="let columnDetailDefinitionDto of getData().controls; let i = index;"
+                   [formGroupName]="i">
+                <div class="col-12 col-sm-5 col-md-3">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="btn btn-outline-secondary">Type:</label>
+                    </div>
+                    <select type="text" class="form-control  border-secondary" formControlName="type" required>
+                      <option *ngFor="let option of options;" [selected]="option.name" [value]="option.shortcut">{{
+                        option.name }}
+                      </option>
+                    </select>
+                  </div>
+                  <div *ngIf="definitionForm.value.columnDetailDefinitionDtoList[i].type=='EN'">
+                    <div class="col-12" formArrayName="optionList">
+                      <div *ngFor="let option of columnDetailDefinitionDto.get('optionList').controls;let j = index" class="row">
+                        <div class="input-group" style="margin-top: 3px;">
+                          <input type="text" class="form-control  border-secondary"
+                                 [value]="definitionForm.value.columnDetailDefinitionDtoList[i].optionList[j]" formControlName="{{j}}"
+                                 placeholder="Option..."
+                                 required>
+                          <div class="input-group-append">
+                            <button type="button" class="btn btn-outline-secondary text-danger" (click)="onDeleteOption(i,j)">X</button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group" style="margin: 5px 0">
+                          <button type="button" class="btn btn-outline-secondary text-primary" (click)="onAddOptions(i)">
+                            Add option
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-11 col-sm-6 col-md-5">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="btn btn-outline-secondary">Name:</label>
+                    </div>
+                    <input type="text" class="form-control border-secondary" formControlName="name" required style="height: 38px;">
+                  </div>
+                </div>
+                <div class="col-1">
+                  <button type="button" class="btn btn-outline-secondary text-danger" (click)="onDeleteColumn(i)">X</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row justify-content-center">
+            <div class="form-group">
+              <button type="button" class="btn btn-outline-secondary text-primary" (click)="onAddColumn()">Add column</button>
+              <button type="button" class="btn btn-outline-secondary text-danger" (click)="onResetForm()">Reset form</button>
+              <button type="submit" class="btn btn-outline-secondary text-success" [disabled]="!definitionForm.valid" (click)="postCommonTableForm()">Define in common table</button>
+              <button type="submit" class="btn btn-outline-secondary text-success" [disabled]="!definitionForm.valid" (click)="postSepareteTableForm()">Define in separate table</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+  <app-menu [parent]="'definition'"></app-menu>
+</div>

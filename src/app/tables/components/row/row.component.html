@@ -1,0 +1,17 @@
+<div class="d-flex justify-content-center">
+  <tr (click)="onEditForm()" *ngIf="rowFilterState" main>
+    <td *ngFor="let cellValue of row.columnValueDtos"
+        [ngClass]="(cellValue | valueOnKey).key == 'DE' ? 'description' : '' ">
+      {{(cellValue | valueOnKey).key == 'DT' ? (cellValue | valueOnKey).value.value.replace('T', ' ') : (cellValue | valueOnKey).value.value}}
+    </td>
+    <ng-template [ngIf]="(tableState$ | async).extendedTableView">
+      <td >{{ row.id }}</td>
+      <td hidden>{{ row.name }}</td>
+      <td>{{ row.createdBy}}</td>
+      <td>{{ row.createdOn }}</td>
+      <td>{{ row.lastModifiedBy }}</td>
+      <td>{{ row.lastModifiedOn }}</td>
+      <td>{{ row.taskDtos.length }}</td>
+    </ng-template>
+  </tr>
+</div>

@@ -1,0 +1,225 @@
+<div class="container">
+  <div id="homeCarousel" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#homeCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#homeCarousel" data-slide-to="1" class=""></li>
+      <li data-target="#homeCarousel" data-slide-to="2" class=""></li>
+      <li data-target="#homeCarousel" data-slide-to="3" class=""></li>
+      <li data-target="#homeCarousel" data-slide-to="4" class=""></li>
+      <li data-target="#homeCarousel" data-slide-to="5" class=""></li>
+      <li data-target="#homeCarousel" data-slide-to="6" class=""></li>
+      <li data-target="#homeCarousel" data-slide-to="7" class=""></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+      <div class="carousel-item active">
+        <div class="slide first-slide"></div>
+        <div class="container">
+          <div class="carousel-caption text-center">
+            <h1>
+              Witam
+            </h1>
+            <p class="lead">
+              Zapraszam na szbki przegląd możliwości aplikacji.<br><br>
+            </p>
+            <p class="d-md-none  d-lg-none d-xl-none">
+              Pełny widok aplikacji dostępny tylko na większym ekranie.<br><br>
+            </p>
+            <p class="text-truncate"> Aplikacja jest w trakcie bududowy niektóre funkcje mogą nie działać poprawnie.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <div class="slide first-slide"></div>
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>DEFINITION</h1>
+            <p class="text-truncate">Zakładka Definition służy do definiowania nowych tabel oraz ich usuwania.<br/>
+              Aby mieć do niej dostęp musisz posiadać role ADMIN.<br/>
+              Wprowadź nazwę tabeli oraz zdefiniuj przynajmniej jedną kolumnę.<br/>
+              (Tymczasowo wspierane są tylko standardowe nazwy SQL - ze spacjami).<br/></p>
+            <p><a class="btn btn-lg btn-outline-info" routerLink="/definitions" role="button" >Przejdz do zakładki</a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <div class="slide first-slide"></div>
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>
+              TABLES
+            </h1>
+            <p class="text-truncate">
+              Zakładka Tables służy do podglądu, wstawiania oraz edycji wierszy zdefiniowanych wcześniej tabel,<br/>
+              W każdym wierszu można zdefiniować taski oraz przypisać do nich użytkowników.<br/>
+              Aby mieć dostęp do konretnej tabeli użytkownik musi mieć do niej uprawnienia lub role ADMIN <br/>
+              (wiecej w sekcji Roles).<br/>
+              Aby użytkowinik mógł mieć przypisany task musi mieć uprawnienia do danej tabeli.<br/>
+              Taski możne edytować tylko użytkownik do niego przypisany lub użytkownik z rolą ADMIN.<br/>
+              (więcej w sekcji Users).<br/>
+            </p>
+            <p class="text-truncate"><a class="btn btn-lg btn-outline-info" routerLink="/tables" role="button" >
+              Przejdz do zakładki</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <div class="slide first-slide"></div>
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>
+              USERS
+            </h1>
+            <p class="text-truncate">
+              Zakładka Users służy do podglądu, usuwania użytkowników oraz edycji ich uprawnień.<br/>
+              Użykownicy z rolą ADMIN posiadają dostęp do wszystkich użytkowników.<br/>
+              W tej zakładce znajduje się lista wszystkich tasków użytkownika z możliwością ich edycji.<br/>
+            </p>
+            <p class="text-truncate"><a class="btn btn-lg btn-outline-info" routerLink="/users" role="button" >
+              Przejdz do zakładki</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <div class="slide first-slide"></div>
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>
+              ROLES
+            </h1>
+            <p class="text-truncate">
+              Zakładka Roles służy do podglądu, definiowania oraz usuwania ról.<br/>
+              Dostęp do niej mają tylko użytkownicy z rolą ADMIN.<br/>
+              Przy definiowaniu tabeli automatycznie jest tworzona rola o tej samej nazwie co nazwa tabeli<br/>
+              jest to podstawowa rola z uprawnieniami do danej tabeli.<br/>
+            </p>
+            <p><a class="btn btn-lg btn-outline-info" routerLink="/roles" role="button" >Przejdz do zakładki</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <div class="slide first-slide"></div>
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>
+              CHAT
+            </h1>
+            <p class="text-truncate">
+              W zakładce Chat można skorzystać z prostego chata.<br/>
+              Chat global jest widoczny dla wszystckich zalogowanych użytkowników.<br/>
+              Przy logowaniu automatycznie tworzone są pokoje prywatne.<br/>
+              Zawartość chatu nie jest przechowywana więc po wylogowaniu nie ma możliwości obejrzenia historii.<br/>
+              W przypadku gdy pracujemy na innej zakładce i otrzymamy widowmość wyświetli się komunikat obok nazwy
+              użytkownika.<br/>
+            </p>
+            <p><a class="btn btn-lg btn-outline-info" routerLink="/chat" role="button" >Przejdz do zakładki</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <div class="slide first-slide"></div>
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>
+              NAZWA UŻYTKOWNIKA
+            </h1>
+            <p class="text-truncate">
+              Klikając we własną nazwę użytkownika można edytować swoje dane oraz zmienić hasło.
+            </p>
+            <p class="d-none .d-sm-block"><a class="btn btn-lg btn-outline-info" routerLink="/training" role="button" >
+              Przejdz do edycji swojego konta
+            </a></p>
+            <p class="d-sm-none d-md-block"><a class="btn btn-lg btn-outline-info" routerLink="/training" role="button" >
+              Przejdź
+            </a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <div class="slide first-slide" alt="First slide"></div>
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>
+              TRAINING
+            </h1>
+            <p class="text-truncate">
+              Zakładka Training nie ma sensu logicznego <br/>
+              po prostu tesowałem możliwości angular material :D<br/>
+            </p>
+            <p class="d-none .d-sm-block d-md-block"><a class="btn btn-lg btn-outline-info" routerLink="/training" role="button" >
+              Przejdź jak chcesz ale to nic ciekawego :)
+            </a></p>
+            <p class="d-sm-none"><a class="btn btn-lg btn-outline-info" routerLink="/training" role="button" >
+              Przejdź
+            </a></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <a class="carousel-control-prev" href="#homeCarousel" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#homeCarousel" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+
+<div id="footer" class="container d-none d-lg-block">
+  <div class="row">
+    <div class="col-2 text-center">
+      <img
+        src="/assets/images/java_mini.png"
+        alt="Generic placeholder image"
+        width="100" height="100"
+      >
+      <h3 class="text-info">Java</h3>
+      <p class="text-info">Java w wersji 8</p>
+    </div>
+    <div class="col-2 text-center">
+      <img
+        src="/assets/images/angular_mini.png"
+        alt="Generic placeholder image" width="110" height="110">
+      <h3 class="text-info">Angular</h3>
+      <p class="text-info">Angular 5 + Angular Material</p>
+    </div>
+    <div class="col-2 text-center">
+      <img
+        src="/assets/images/spring_boot_mini.png"
+        alt="Generic placeholder image" width="100" height="100">
+      <h3 class="text-info">Spring</h3>
+      <p class="text-info">Boot + Security + Oauth + JDBC + Messaging + WebMVC</p>
+    </div>
+    <div class="col-2 text-center">
+      <img
+        src="/assets/images/hibernate_mini.png"
+        alt="Generic placeholder image" width="100" height="100">
+      <h3 class="text-info">Hibernate</h3>
+      <p class="text-info">Hibernate w wersji 5</p>
+    </div>
+    <div class="col-2 text-center">
+      <img
+        src="/assets/images/pg_mini.png"
+        alt="Generic placeholder image" width="100" height="100">
+      <h3 class="text-info">PostgreSQL</h3>
+      <p class="text-info">PostreSQL - heroku + MySQL - lokalnie</p>
+    </div>
+    <div class="col-2 text-center">
+      <img
+        src="/assets/images/bootstrap_mini.png"
+        alt="Generic placeholder image" width="170" height="130">
+      <h3 class="text-info">Bootstrap</h3>
+      <p class="text-info">Bootstrap 4</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<div *ngIf="!(backendRunning| async)" class="spinner-container">
+  <app-spinner></app-spinner>
+</div>
+<div *ngIf="(backendRunning| async)">
+  <div [ngClass]="url !== '/chat' ? 'bigScreen' : ''">
+    <app-header *ngIf="currentUser | async"></app-header>
+    <router-outlet></router-outlet>
+  </div>
+  <div class="jumbotron vertical-center smallScreen" *ngIf="url !== '/chat'">
+    <div class="container" style="margin: 0">
+      <p class="text-center text-info border border-info rounded" style="margin: 50px">Obróc telefon lub spróbuj na
+        większym ekranie.</p>
+    </div>
+  </div>
+</div>

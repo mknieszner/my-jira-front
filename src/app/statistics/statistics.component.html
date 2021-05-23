@@ -1,0 +1,24 @@
+<div class="jumbotron">
+  <div class="row">
+    <div class="col-12 col-md-3" style="margin-bottom: 30px">
+      <ul class="list-group">
+        <li class="list-group-item" style="background-color: rgba(0,0,0,0.05)">Tables:</li>
+        <li class="list-group-item" *ngFor="let tableDetails of (tableState$ | async).tablesDetails"
+            [ngClass]="(selectedTableName | async) == tableDetails.name ? 'bg-light' : ''"
+            (click)="onSelectTableName(tableDetails)"
+        >
+          {{ tableDetails.name }}  {{isSupported(tableDetails) ? '(C)':'(S - Not Supported)'}}
+        </li>
+      </ul>
+    </div>
+    <div class="col-12 col-md-9">
+      <app-table-statistics
+      [tableContentState$]="tableContentState$"
+      [selectedTableName$]="selectedTableName$"
+      [tableHeaderState$]="tableHeaderState$"
+      [tablesDetails$]="tableDetails$ | async"
+      (setTableData)="setTableData($event)"
+      ></app-table-statistics>
+    </div>
+  </div>
+</div>

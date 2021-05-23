@@ -1,0 +1,27 @@
+li {
+  border: 1px solid #32383e;
+  background-color: rgba(200, 200, 200, 0.05);
+  color: gray !important;
+}
+
+li:hover {
+  background-color: rgba(200, 200, 200, 0.2);
+}
+
+.bg-light {
+  background-color: rgba(200, 200, 200, 0.2) !important;
+}
+
+.jumbotron {
+  background: none;
+}
+
+.panel-header {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+td, th{
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: none;
+}

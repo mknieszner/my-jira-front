@@ -1,0 +1,104 @@
+<div *ngIf="usernameState">
+  <div class="jumbotron bg-transparent">
+    <div class="row d-flex justify-content-center">
+      <div class="col-6">
+        <div class="row">
+          <div class="col-12 d-flex justify-content-center">
+            <div *ngIf="!editMode && !resetPasswordMode">
+              <table class="table border-secondary table-striped">
+                <tbody>
+                <tr>
+                  <td><span class="text-info">USERNAME:</span></td>
+                  <td><span class="text-white"> {{userDetails?.username}}</span></td>
+                </tr>
+                <tr>
+                  <td><span class="text-info">EMAIL:</span></td>
+                  <td><span class="text-white"> {{ userDetails?.email }}</span></td>
+                </tr>
+                <tr>
+                  <td><span class="text-info">FIRSTNAME:</span></td>
+                  <td><span class="text-white">{{ userDetails?.firstName }}</span></td>
+                </tr>
+                <tr>
+                  <td><span class="text-info">LASTNAME:</span></td>
+                  <td><span class="text-white">{{ userDetails?.lastName }}</span></td>
+                </tr>
+                <tr>
+                  <td><span class="text-info">ENABLED:</span></td>
+                  <td><span class="text-white">{{ userDetails?.enabled }}</span></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div *ngIf="editMode">
+              <form #updateDetailsForm="ngForm">
+                <ul class="list-group bg-transparent">
+                  <li class="list-group-item">
+                    <span class="text-info">USERNAME:</span>
+                    <span class="text-white"> {{userDetails?.username}}</span>
+                  </li>
+                  <li class="list-group-item">
+                    <span class="text-info">EMAIL:</span>
+                    <input class="text-white form-control" ngModel="{{ userDetails?.email }}" name="email">
+                  </li>
+                  <li class="list-group-item">
+                    <span class="text-info">FIRSTNAME:</span>
+                    <input class="text-white form-control" ngModel="{{ userDetails?.firstName }}" name="firstName">
+                  </li>
+                  <li class="list-group-item">
+                    <span class="text-info">LASTNAME:</span>
+                    <input class="text-white form-control" ngModel="{{ userDetails?.lastName }}" name="lastName">
+                  </li>
+                  <li class="list-group-item">
+                    <span class="text-info">ENABLED:</span>
+                    <span class="text-white">{{ userDetails?.enabled }}</span>
+                  </li>
+                </ul>
+                <div *ngIf="editMode" class="btn-group" style="margin-top: 30px">
+                  <button class="btn btn-outline-secondary" (click)="toggleEditMode()"> Close</button>
+                  <button class="btn btn-outline-secondary" (click)="updateUser(updateDetailsForm.value)" *ngIf="editMode"> Save</button>
+                </div>
+              </form>
+            </div>
+
+            <div *ngIf="resetPasswordMode">
+              <form #updatePasswordForm="ngForm">
+
+                <ul class="list-group bg-transparent">
+
+                  <li class="list-group-item">
+                    <span class="text-info">Old password</span>
+                    <input type="password" class="text-white form-control" ngModel name="oldPassword">
+                  </li>
+
+                  <li class="list-group-item">
+                    <span class="text-info">Password</span>
+                    <input type="password" class="text-white form-control" ngModel name="newPassword">
+                  </li>
+
+                  <li class="list-group-item">
+                    <span class="text-info">Confirm password</span>
+                    <input type="password" class="text-white form-control" ngModel name="confirmPassword">
+                  </li>
+                </ul>
+                <div class="btn-group" style="margin-top: 30px">
+                  <button class="btn btn-outline-secondary" (click)="togglePasswordResetMode()"> Close</button>
+                  <button class="btn btn-outline-secondary" (click)="updatePassword(updatePasswordForm.value)"> Save</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 d-flex justify-content-center">
+            <div class="btn-group" *ngIf="!editMode && !resetPasswordMode">
+              <button class="btn btn-outline-secondary" (click)="toggleEditMode()"> Edit</button>
+              <button class="btn btn-outline-secondary" (click)="togglePasswordResetMode()">Reset Password</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
